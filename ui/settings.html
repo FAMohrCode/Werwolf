@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Werwolf – Optionen</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Zurück-Button -->
+    <div class="back_container" onclick="window.history.back()">
+        <img src="{{ url_for('static', filename='arrow_back.png')}}" alt="Zurück">
+    </div>
+
+    <div class="container">
+        <h1>Optionen</h1>
+
+        <!-- Sprache -->
+        <label for="language">Sprache:</label>
+        <select id="language">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+        </select>
+
+        <!-- Server-Port -->
+        <label for="port">Server-Port:</label>
+        <input type="number" id="port" placeholder="5000" min="1024" max="65535">
+
+        <!-- Dark/Light Mode -->
+        <label class="theme-switch">
+            <input type="checkbox" id="theme">
+            <span class="slider"></span>
+            <span id="theme-text">Hellmodus</span>
+        </label>
+
+
+        <!-- Speichern Button -->
+        <button onclick="saveSettings()">Speichern</button>
+    </div>
+
+    <footer>© 2026 Werwolf App</footer>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
