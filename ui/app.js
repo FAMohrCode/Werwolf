@@ -52,4 +52,49 @@ themeCheckbox.addEventListener("change", updateThemeText);
 // Initial setzen
 updateThemeText();
 
+function saveSettings() {
+    const language = document.getElementById('language').value;
+    const port = document.getElementById('port').value;
+    const theme = document.getElementById('theme').checked ? 'dark' : 'light';
 
+    const settings = {
+        language: language,
+        port: port,
+        theme: theme
+    };
+
+    fetch('/save-settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(settings)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message); // z.B. "Einstellungen gespeichert!"
+    })
+    .catch(error => {
+        console.error('Fehler:', error);
+    });
+}
+
+// Einstellungen beim Laden der Seite holen
+window.addEventListener("DOMContentLoaded", () => {
+    const languageSelect = document.getElementById("language");
+    const portInput = document.getElementById("port");
+    const themeCheckbox = document.getElementById("theme");
+    const themeText = document.getElementById("theme-text");
+
+    if (languageSelect && portInput && themeCheckbox) {
+        fetch("/settings-data")
+            .then(res => res.json())
+            .then(data => {
+                languageSelect.value = data.language || "de";
+                portInput.value = data.port || 5000;
+                themeCheckbox.checked = data.theme === "dark";
+                themeText.textContent = data.theme === "dark" ? "Dunkelmodus" : "Hellmodus";
+            })
+            .catch(err => console.error("Fehler beim Laden der Einstellungen:", err));
+    }
+});
