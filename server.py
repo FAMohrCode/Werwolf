@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import os
 import json
 
-app = Flask(__name__, template_folder="web", static_folder="web")
+app = Flask(__name__, template_folder="web")
 SETTINGS_FILE = 'settings.json'
 USERDATA_FILE = "temp/userdatas.json"
 
@@ -40,6 +40,7 @@ def save_nickname():
             return jsonify({
                 "message": f"Nickname '{nickname}' ist schon vergeben!"
             }), 409
+    lobby()
 
     # Nickname ist frei → speichern
     user_id = str(len(users) + 1)
@@ -50,13 +51,35 @@ def save_nickname():
         "message": f"Nickname '{nickname}' gespeichert!"
     })
 
+@app.route("/api/lobby-users")
+def lobby_users():
+    try:
+        with open("temp/userdatas.json", "r") as f:
+            data = json.load(f)
+
+        # 🧹 Spieler ohne gültigen Nickname entfernen
+        clean_data = {
+            uid: user
+            for uid, user in data.items()
+            if user.get("nickname") and user["nickname"].strip()
+        }
+
+        return jsonify(clean_data)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/lobby")
+def lobby():
+    return render_template("lobby.html")
 
 def run_server():
     settings = {"language": "de", "port": 5050, "theme": "light"}
     if os.path.exists(SETTINGS_FILE):
         with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
             settings = json.load(f)
-    app.run(host="127.0.0.1", port=settings["port"])
+    app.run(host="0.0.0.0", port=settings["port"])

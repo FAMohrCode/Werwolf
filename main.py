@@ -4,9 +4,9 @@ from flask import Flask, render_template, jsonify, request
 import json
 import os
 import server
-import shutil
+import socket
 
-app = Flask(__name__, template_folder="ui", static_folder="ui")
+app = Flask(__name__, template_folder="ui")
 
 window = None
 
@@ -37,12 +37,33 @@ def lobby_users():
     try:
         with open("temp/userdatas.json", "r") as f:
             data = json.load(f)
-        return jsonify(data)
+
+        # 🧹 Spieler ohne gültigen Nickname entfernen
+        clean_data = {
+            uid: user
+            for uid, user in data.items()
+            if user.get("nickname") and user["nickname"].strip()
+        }
+
+        return jsonify(clean_data)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/lobby-link")
+def get_lobby_link():
+    # Lade Settings aus der JSON-Datei
+    settings = {"language": "de", "port": 5050, "theme": "light"}
+    if os.path.exists(SETTINGS_FILE):
+        with open(SETTINGS_FILE, 'r', encoding='utf-8') as f:
+            settings = json.load(f)
+
+    url = f"http://{get_local_ip()}:{settings['port']}"
+    return jsonify({"url": url})
+
 @app.route("/start-server", methods=["POST"])
 def start_server_route():
+    clear_userdatas()
     threading.Thread(target=server.run_server, daemon=True).start()
 
 @app.route('/save-settings', methods=['POST'])
@@ -73,6 +94,22 @@ def exit_app():
     threading.Thread(target=close_window).start()
     return jsonify({"status": "App wird geschlossen..."})
 
+def get_local_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Verbindung zu einer externen IP (ohne wirklich Daten zu senden)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return "127.0.0.1"
+
+def clear_userdatas():
+    os.makedirs("temp", exist_ok=True)  # falls temp noch nicht existiert
+    with open("temp/userdatas.json", "w") as f:
+        json.dump({}, f)
+
 def run_flask():
     app.run(host="127.0.0.1", port=5000, debug=True, use_reloader=False)
 
@@ -89,5 +126,3 @@ def start():
 
 if __name__ == "__main__":
     start()
-    if os.path.exists("temp") and os.path.isdir("temp"):
-        shutil.rmtree("temp")

@@ -43,3 +43,21 @@ document.addEventListener("DOMContentLoaded", () => {
         setInterval(loadLobbyUsers, 2000);
     }
 });
+
+// QR-Code
+document.addEventListener("DOMContentLoaded", () => {
+    const qrContainer = document.getElementById("qrcode");
+    if (!qrContainer) return;
+
+    fetch("/api/lobby-link")
+        .then(res => res.json())
+        .then(data => {
+            new QRCode(qrContainer, {
+                text: data.url,
+                width: 160,
+                height: 160,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        })
+        .catch(err => console.error("QR-Link Fehler:", err));
+});

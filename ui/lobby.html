@@ -8,22 +8,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='src/style/lobby.css') }}">
 </head>
 <body>
-    <!-- Exit-Button -->
+    <!-- Buttons -->
     <div class="back_container" id="back">
         <img src="{{ url_for('static', filename='src/img/arrow_back.png')}}" alt="Back">
     </div>
-
     <div class="settings_container" id="settings">
         <img src="{{ url_for('static', filename='src/img/settings.png')}}"/>
     </div>
-    <h1>Werwolf</h1>
-    <div class="container">
-        <h2>Lobby</h2>
-        <ul id="player-list"></ul>
+
+    <div class="lobby-wrapper">
+        <!-- QR-Code links -->
+        <div class="qr-container">
+            <p>Lobby beitreten</p>
+            <div id="qrcode"></div>
+        </div>
+
+        <!-- Lobby rechts -->
+        <div class="container">
+            <h2>Lobby</h2>
+            <ul id="player-list" class="player-list"></ul>
+        </div>
     </div>
 
-
     <footer>© 2026 Werwolf App</footer>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="{{ url_for('static', filename='src/scripts/app.js') }}"></script>
     <script src="{{ url_for('static', filename='src/scripts/lobby.js') }}"></script>
 </body>
