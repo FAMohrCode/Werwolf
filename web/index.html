@@ -2,10 +2,45 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="icon" href="{{ url_for('static', filename='src/img/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/style/style.css') }}">
     <title>Werwolf</title>
 </head>
 <body>
-  <h1>Willkommen</h1>
+  <div class="container">
+      <h1>Willkommen</h1>
+      <label for="nickname">Gib deinen Nickname ein:</label>
+      <input type="text" id="nickname" placeholder="Nickname">
+      <button id="save-btn">Speichern</button>
+      <p id="message"></p>
+  </div>
+
+  <script>
+      const saveBtn = document.getElementById('save-btn');
+      const nicknameInput = document.getElementById('nickname');
+      const message = document.getElementById('message');
+
+      saveBtn.addEventListener('click', () => {
+          const nickname = nicknameInput.value.trim();
+          if (!nickname) {
+              message.textContent = "Bitte einen Nickname eingeben!";
+              return;
+          }
+
+          fetch('/save_nickname', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ nickname })
+          })
+          .then(res => res.json())
+          .then(data => {
+              message.textContent = data.message;
+          })
+          .catch(err => {
+              console.error(err);
+              message.textContent = "Fehler beim Speichern!";
+          });
+      });
+  </script>
 </body>
 </html>

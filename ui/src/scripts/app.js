@@ -4,6 +4,8 @@ function startServer() {
         .then(res => res.json())
         .then(data => alert(data.status))
         .catch(err => console.error(err));
+
+    window.location.href = "/lobby";
 }
 
 function exitApp() {
@@ -98,3 +100,5 @@ window.addEventListener("DOMContentLoaded", () => {
             .catch(err => console.error("Fehler beim Laden der Einstellungen:", err));
     }
 });
+
+

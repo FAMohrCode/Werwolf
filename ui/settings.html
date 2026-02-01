@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Werwolf – Optionen</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='src/img/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/style/style.css') }}">
 </head>
 <body>
     <!-- Zurück-Button -->
     <div class="back_container" onclick="window.history.back()">
-        <img src="{{ url_for('static', filename='arrow_back.png')}}" alt="Zurück">
+        <img src="{{ url_for('static', filename='src/img/arrow_back.png')}}" alt="Zurück">
     </div>
 
     <div class="container">
-        <h1>Optionen</h1>
+        <h2>Optionen</h2>
 
         <!-- Sprache -->
         <label for="language">Sprache:</label>
@@ -39,6 +39,6 @@
     </div>
 
     <footer>© 2026 Werwolf App</footer>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
+    <script src="{{ url_for('static', filename='src/scripts/app.js') }}"></script>
 </body>
 </html>

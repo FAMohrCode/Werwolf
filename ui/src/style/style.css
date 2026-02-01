@@ -1,0 +1,240 @@
+/* --- Grundlayout --- */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa; /* sanftes Hellblau/Grau */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+/* --- Container für Inhalte --- */
+.container {
+    background-color: #ffffffcc; /* leicht transparentes Weiß */
+    padding: 50px 60px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    width: 30rem;
+}
+
+/* --- Überschrift --- */
+h1 h2 {
+    margin-bottom: 40px;
+    color: #3b3f5c; /* sanftes Dunkelblau */
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+/* --- Logo --- */
+.logo {
+    height: 10rem;
+}
+
+/* --- Button --- */
+button {
+    background-color: #6c63ff; /* sanftes Lila */
+    border: none;
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    background-color: #5952d4;
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* --- Settings Botton --- */
+.settings_container {
+    position: fixed;      /* fixiert am Fenster */
+    top: 1rem;            /* Abstand von oben */
+    right: 1rem;          /* Abstand von rechts */
+    height: 3rem;
+    width: 3rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings_container img {
+    height: 100%;
+    width: 100%;
+    transition: transform 0.8s ease; /* für Hover-Rotation */
+}
+
+/* Hover: 360° Rotation */
+.settings_container:hover img {
+    transform: rotate(180deg);
+    transform: scale(1.2);
+}
+
+.settings_container:not(:hover) img {
+    transform: rotate(-180deg);
+}
+
+/* --- Optionen Styling --- */
+
+/* --- Back Botton --- */
+.back_container {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    height: 3rem;
+    width: 3rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back_container img {
+    height: 100%;
+    width: 100%;
+    transition: transform 0.8s ease; /* für Hover-Rotation */
+}
+
+.back_container:hover img {
+    transform: scale(1.2);
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin: 15px 0 5px;
+    font-size: 1.1rem;
+    color: #3b3f5c;
+    text-align: left;
+}
+
+select, input[type="number"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+select:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
+}
+
+/* Label als Container */
+.theme-switch {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Slider */
+.theme-switch .slider {
+    position: relative;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    margin-right: 15px; /* Abstand zum Text */
+    transition: 0.4s;
+}
+
+.theme-switch .slider:before {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+/* Checkbox verstecken */
+.theme-switch input {
+    display: none;
+}
+
+/* Checkbox checked → Slider anpassen */
+.theme-switch input:checked + .slider {
+    background-color: #6c63ff;
+}
+
+.theme-switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Text rechts vom Slider */
+#theme-text {
+    font-weight: 600;
+    color: #3b3f5c;
+}
+
+
+/* Speichern Button */
+button {
+    width: 100%;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    border: none;
+    border-radius: 16px;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #5952d4, #8a73f7);
+}
+
+/* --- Footer --- */
+footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* --- Responsive --- */
+@media (max-width: 500px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}

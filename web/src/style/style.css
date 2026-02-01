@@ -22,10 +22,17 @@ body {
 }
 
 /* --- Überschrift --- */
-h1 {
-    font-size: 2.5rem;
+h1 h2 {
     margin-bottom: 40px;
     color: #3b3f5c; /* sanftes Dunkelblau */
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
 }
 
 /* --- Logo --- */
@@ -230,4 +237,17 @@ footer {
         padding: 12px 30px;
         font-size: 1rem;
     }
+}
+
+#player-list {
+    list-style: none;
+    padding: 0;
+}
+
+#player-list li {
+    padding: 0.6rem 1rem;
+    margin: 0.4rem 0;
+    background: #eef2f7;
+    border-radius: 10px;
+    font-weight: 500;
 }

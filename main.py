@@ -4,6 +4,7 @@ from flask import Flask, render_template, jsonify, request
 import json
 import os
 import server
+import shutil
 
 app = Flask(__name__, template_folder="ui", static_folder="ui")
 
@@ -19,6 +20,10 @@ def index():
 def settings():
     return render_template("settings.html")
 
+@app.route("/lobby")
+def lobby():
+    return render_template("lobby.html")
+
 @app.route("/settings-data")
 def get_settings_data():
     settings = {"language": "de", "port": 5050, "theme": "light"}
@@ -27,11 +32,18 @@ def get_settings_data():
             settings = json.load(f)
     return jsonify(settings)
 
+@app.route("/api/lobby-users")
+def lobby_users():
+    try:
+        with open("temp/userdatas.json", "r") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/start-server", methods=["POST"])
 def start_server_route():
     threading.Thread(target=server.run_server, daemon=True).start()
-    return jsonify({"status": "Server gestartet"})
 
 @app.route('/save-settings', methods=['POST'])
 def save_settings():
@@ -70,10 +82,12 @@ def start():
     window = webview.create_window(
         "Werwolf – Spielleiter",
         "http://127.0.0.1:5000/",
-        width=900,
-        height=600
+        width=1200,
+        height=700
     )
     webview.start(gui='qt')
 
 if __name__ == "__main__":
     start()
+    if os.path.exists("temp") and os.path.isdir("temp"):
+        shutil.rmtree("temp")
